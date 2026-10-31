@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cecee Automation Control Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #120c18;
+            --bg-card: #1c1326;
+            --border-pink: #ff75b5;
+            --pink-primary: #ff69b4;
+            --pink-light: #ffb6c1;
+            --text-main: #fce4ec;
+            --text-muted: #d8b4fe;
+            --neon-glow: 0 0 15px rgba(255, 105, 180, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px dashed rgba(255, 117, 181, 0.3);
+            padding-bottom: 15px;
+        }
+
+        .brand h1 {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.8rem;
+            color: var(--pink-primary);
+            text-shadow: var(--neon-glow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .active-account-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-pink);
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin-bottom: 25px;
+            box-shadow: var(--neon-glow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .account-info .label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .account-info .username {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.4rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .otp-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .otp-input-group input {
+            background: #120c18;
+            border: 1px solid var(--border-pink);
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: #fff;
+            outline: none;
+            width: 180px;
+            font-size: 0.9rem;
+        }
+
+        .otp-input-group input:focus {
+            box-shadow: 0 0 10px var(--pink-primary);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 117, 181, 0.4);
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .step-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--pink-primary);
+            box-shadow: var(--neon-glow);
+        }
+
+        .step-card i {
+            font-size: 1.5rem;
+            color: var(--pink-primary);
+            margin-bottom: 10px;
+        }
+
+        .step-card h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-family: 'Fredoka', cursive;
+        }
+
+        .step-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-main {
+            width: 100%;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 16px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--neon-glow);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            font-family: 'Fredoka', cursive;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-main:hover {
+            opacity: 0.9;
+            transform: scale(1.01);
+        }
+
+        .input-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 117, 181, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .input-section label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-section p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .input-section textarea {
+            width: 100%;
+            height: 110px;
+            background: #120c18;
+            border: 1px solid rgba(255, 117, 181, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            color: #fff;
+            resize: vertical;
+            outline: none;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .input-section textarea:focus {
+            border-color: var(--pink-primary);
+        }
+
+        .input-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .counter-badge {
+            background: rgba(255, 105, 180, 0.15);
+            color: var(--pink-light);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+        }
+
+        .btn-upload {
+            background: #2b1836;
+            color: var(--pink-light);
+            border: 1px solid var(--border-pink);
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .btn-upload:hover {
+            background: var(--pink-primary);
+            color: #fff;
+        }
+
+        .terminal-box {
+            background: #0d0812;
+            border: 1px solid var(--border-pink);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: var(--neon-glow);
+            margin-bottom: 30px;
+        }
+
+        .terminal-header {
+            background: #1c1326;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 117, 181, 0.2);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .terminal-title {
+            margin-left: 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .terminal-body {
+            padding: 15px;
+            height: 220px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+
+        .log-info { color: #60a5fa; }
+        .log-success { color: #34d399; }
+        .log-warning { color: #ffb6c1; }
+        .log-pink { color: var(--pink-primary); }
+
+        @media (max-width: 600px) {
+            .active-account-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .otp-input-group {
+                width: 100%;
+            }
+            .otp-input-group input {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand">
+                <h1><i class="fa-solid fa-wand-magic-sparkles"></i> Cecee Automation</h1>
+            </div>
+        </header>
+
+        <!-- Active Account & OTP -->
+        <div class="active-account-card">
+            <div class="account-info">
+                <div class="label">Akaun Aktif</div>
+                <div class="username"><i class="fa-solid fa-circle-user" style="color: var(--pink-primary);"></i> 0oujd6i64q</div>
+            </div>
+            <div class="otp-input-group">
+                <input type="text" id="otpInput" placeholder="Masukkan OTP...">
+                <button class="btn-upload" onclick="submitOtp()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- Step Grid -->
+        <div class="steps-grid">
+            <div class="step-card" onclick="runStep('Step 1: Ganti Nomor (/account)')">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                <h3>Step 1</h3>
+                <p>Ganti Nomor (/account)</p>
+            </div>
+            <div class="step-card" onclick="runStep('Step 2: Transfer (/transfer)')">
+                <i class="fa-solid fa-exchange-alt"></i>
+                <h3>Step 2</h3>
+                <p>Transfer (/transfer)</p>
+            </div>
+            <div class="step-card" onclick="runStep('Step 3: Misi Checkin (/mission)')">
+                <i class="fa-solid fa-calendar-check"></i>
+                <h3>Step 3</h3>
+                <p>Misi Checkin (/mission)</p>
+            </div>
+            <div class="step-card" onclick="runStep('Step 4: ShopeeFood Voucher')">
+                <i class="fa-solid fa-utensils"></i>
+                <h3>Step 4</h3>
+                <p>ShopeeFood (vocershp.py)</p>
+            </div>
+        </div>
+
+        <!-- Main Run Button -->
+        <button class="btn-main" onclick="runAutoMode()">
+            <i class="fa-solid fa-bolt"></i> JALANKAN SEMUA (AUTO MODE 1➔4)
+        </button>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <label><i class="fa-solid fa-file-lines" style="color: var(--pink-primary);"></i> Input Daftar Akun (Manual)</label>
+            <p>Masukkan username (satu per baris). Pisahkan info tambahan dengan '|' (contoh: username | pass).</p>
+            <textarea id="accountList" oninput="updateCounter()">username1
+username2 | info
+username3</textarea>
+            <div class="input-footer">
+                <div class="counter-badge" id="counterBadge">Jumlah Akun: 3</div>
+                <button class="btn-upload" onclick="saveAccounts()"><i class="fa-solid fa-upload"></i> Simpan List</button>
+            </div>
+        </div>
+
+        <!-- Terminal Output -->
+        <div class="terminal-box">
+            <div class="terminal-header">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+                <div class="terminal-title">/data/data/com.termux/files/home/deals.py</div>
+            </div>
+            <div class="terminal-body" id="terminalLog">
+                <span class="log-pink">✨ SHP TOOLS - Interactive Automation ✨</span><br>
+                <span class="log-warning">🌸 Jumlah 3 username dimuat daripada list.</span><br>
+                <span class="log-success">✨ Berhasil di-update! Akun aktif saat ini: 0oujd6i64q</span><br>
+                <span class="log-info">🚀 Siap menjalankan perintah otomatis...</span><br>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCounter() {
+            const text = document.getElementById('accountList').value;
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            document.getElementById('counterBadge').innerText = `Jumlah Akun: ${lines.length}`;
+        }
+
+        function appendLog(text, type = 'info') {
+            const term = document.getElementById('terminalLog');
+            let colorClass = 'log-info';
+            if (type === 'success') colorClass = 'log-success';
+            if (type === 'warning') colorClass = 'log-warning';
+            if (type === 'pink') colorClass = 'log-pink';
+            
+            term.innerHTML += `<span class="${colorClass}">[${new Date().toLocaleTimeString()}] ${text}</span><br>`;
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function runStep(stepName) {
+            appendLog(`Memulai ${stepName}...`, 'pink');
+            setTimeout(() => {
+                appendLog(`Berhasil menyelesaikan ${stepName}!`, 'success');
+            }, 1000);
+        }
+
+        function runAutoMode() {
+            appendLog(`⚡ MEMULAI AUTO MODE (1➔4)...`, 'pink');
+            setTimeout(() => {
+                appendLog(`--- 🌸 STEP 1: /account ---`, 'warning');
+            }, 800);
+            setTimeout(() => {
+                appendLog(`--- 🌸 STEP 2: /transfer ---`, 'warning');
+            }, 1800);
+            setTimeout(() => {
+                appendLog(`--- 🌸 STEP 3: /mission ---`, 'warning');
+            }, 2800);
+            setTimeout(() => {
+                appendLog(`✨ SEMUA AUTO MODE SELESAI DENGAN SUKSES! ✨`, 'success');
+            }, 3800);
+        }
+
+        function submitOtp() {
+            const otp = document.getElementById('otpInput').value;
+            if(otp.trim() !== '') {
+                appendLog(`🔑 Mengirim OTP manual: ${otp}`, 'info');
+                document.getElementById('otpInput').value = '';
+                setTimeout(() => {
+                    appendLog(`✨ OTP berhasil diverifikasi oleh bot!`, 'success');
+                }, 1000);
+            } else {
+                alert('Silakan masukkan kode OTP terlebih dahulu!');
+            }
+        }
+
+        function saveAccounts() {
+            const text = document.getElementById('accountList').value;
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            appendLog(`💾 Menyimpan ${lines.length} akun ke database lokal...`, 'success');
+        }
+
+        updateCounter();
+    </script>
+</body>
+</html>
